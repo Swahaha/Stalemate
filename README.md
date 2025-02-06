@@ -1,1 +1,3 @@
 # Stalemate
+
+A chessbot.
