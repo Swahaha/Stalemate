@@ -1,33 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import { Chess } from 'chess.js';
+import { Chessboard } from "react-chessboard";
 import './App.css';
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
-  console.log("hello")
+  const [game, setGame] = useState(new Chess());
 
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
+  function makeAMove(move) {
+    const gameCopy = new Chess(game.fen());
+    let result = null;
+    try{
+      const result = gameCopy.move(move);
+    }
+    catch(error){
+      console.log("invalid move");
+    }
+    setGame(gameCopy);
+    return result; // null if the move was illegal, the move object if the move was legal
+  }
+
+  // function makeRandomMove() {
+  //   const possibleMoves = game.moves();
+  //   if (game.game_over() || game.in_draw() || possibleMoves.length === 0)
+  //     return; // exit if the game is over
+  //   const randomIndex = Math.floor(Math.random() * possibleMoves.length);
+  //   makeAMove(possibleMoves[randomIndex]);
+  // }
+
+  function onDrop(sourceSquare, targetSquare) {
+    const move = makeAMove({
+      from: sourceSquare,
+      to: targetSquare,
+      promotion: "q", // always promote to a queen for example simplicity
     });
-  }, []);
+
+    // illegal move
+    if (move === null) return false;
+    // setTimeout(makeRandomMove, 200);
+    return true;
+  }
+
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>The current time is {currentTime}.</p>
+        <div>
+          <Chessboard id="BasicBoard" boardWidth={500} position={game.fen()} onPieceDrop={onDrop}/>
+          A
+        </div>
       </header>
     </div>
   );

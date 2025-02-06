@@ -1,5 +1,7 @@
 import math
 
+
+# Both for inference.
 def find_best_move_non_recursive(board):
     """non-recursive"""
     # create copy of board
@@ -18,7 +20,6 @@ def find_best_move_non_recursive(board):
 
 def find_best_move(board, player, depth = 3, curr_depth = 0):
     """use minimax alg"""
-
     best_score, best_move = -float('inf'), None
     
     if board.is_player_turn(player): # If it is our turn run MAX
