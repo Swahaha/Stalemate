@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chess.js": "^1.0.0",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
+    "react-chessboard": "^4.7.2",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^4.2.4",
+    "yarn": "^1.22.22"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && venv/Scripts/python -m flask run --no-debugger",
+    "start-api": "cd api && venv/bin/python -m flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
