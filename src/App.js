@@ -34,6 +34,7 @@ function App() {
       promotion: "q", // always promote to a queen for example simplicity
     });
 
+
     // illegal move
     if (move === null) return false;
     // setTimeout(makeRandomMove, 200);
@@ -45,8 +46,12 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>
-          <Chessboard id="BasicBoard" boardWidth={500} position={game.fen()} onPieceDrop={onDrop}/>
-          A
+          <Chessboard 
+          id="BasicBoard" 
+          boardWidth={500} 
+          position={game.fen()} 
+          onPieceDrop={onDrop} 
+          animationDuration={0}/>
         </div>
       </header>
     </div>
