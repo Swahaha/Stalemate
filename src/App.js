@@ -9,14 +9,15 @@ function App() {
   function makeAMove(move) {
     const gameCopy = new Chess(game.fen());
     let result = null;
-    try{
-      const result = gameCopy.move(move);
+    try {
+      result = gameCopy.move(move);
+    } catch (error) {
+      console.log("Invalid move");
     }
-    catch(error){
-      console.log("invalid move");
+    if (result) {
+      setGame(gameCopy);
     }
-    setGame(gameCopy);
-    return result; // null if the move was illegal, the move object if the move was legal
+    return result;
   }
 
   // function makeRandomMove() {
@@ -34,11 +35,32 @@ function App() {
       promotion: "q", // always promote to a queen for example simplicity
     });
 
-
     // illegal move
     if (move === null) return false;
+
+    setTimeout(getBestMove, 500);
     // setTimeout(makeRandomMove, 200);
     return true;
+  }
+
+  function getBestMove() {
+    const fen = game.fen(); 
+    console.log("hello")
+    fetch('http://127.0.0.1:5000/get_best_move', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fen: fen })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.best_move)
+      if (data.best_move) {
+        makeAMove({ from: data.best_move.slice(0, 2), to: data.best_move.slice(2, 4) });
+      } else {
+        console.error("Error:", data.error);
+      }
+    })
+    .catch(error => console.error("Fetch error:", error));
   }
 
 
