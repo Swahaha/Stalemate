@@ -2,12 +2,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import time
 import subprocess
+import os
 
 app = Flask(__name__)
 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-STOCKFISH_PATH = r"C:\Users\swara\Downloads\stockfish-windows-x86-64-sse41-popcnt\stockfish\stockfish-windows-x86-64-sse41-popcnt.exe"  # Update this with the correct path
+STOCKFISH_PATH = "./stockyfishy.exe"
 
 @app.route('/')
 def home():
